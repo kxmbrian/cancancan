@@ -6,7 +6,7 @@ module CanCan
         model_class <= ActiveRecord::Base
       end
 
-      def tableized_conditions(conditions, current_scope = @model_class.all, current_nesting = [],
+      def tableized_conditions(conditions, current_scope = @model_class.unscoped, current_nesting = [],
                                table_aliases = {})
         return conditions unless conditions.kind_of? Hash
         conditions.inject({}) do |result_hash, (name, value)|
@@ -91,7 +91,7 @@ module CanCan
         # Get the value of the attribute as an integer.
         attribute = enum[subject.send(name)]
         # Check to see if the value matches the condition.
-        value.is_a?(Enumerable) ? 
+        value.is_a?(Enumerable) ?
           (value.include? attribute) :
           attribute == value
       end
